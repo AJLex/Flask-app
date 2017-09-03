@@ -1,0 +1,14 @@
+venv/
+.idea/
+__pycache__/
+pars/ramblerkassa/__pycache__/
+pars/parser.py
+pars/ramblerkassa/old_film_parser.py
+pars/ramblerkassa/test.py
+pars/ramblerkassa/params.py
+pars/ramblerkassa/films.txt
+pars/concert/test.py
+*.db
+pars/concert/concert_urls.txt
+pars/concert/theatre_urls.txt
+/migrations/

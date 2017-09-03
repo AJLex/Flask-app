@@ -1,0 +1,6 @@
+SQLAlchemy==1.1.11
+Flask==0.12.2
+requests==2.18.1
+Flask-Migrate==2.0.4
+geopy
+beautifulsoup4==4.6.0

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}{{title}}{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block content %}
+<div class="container">
+    <h1>{{header}}</h1>
+    <form class="form-inline" action="/{{url_attr_1}}" method="get" id="myform">
+        <div class="well">
+        <div class="form-group">
+            <select name="dates">
+                <option value=""></option>
+                <option value="today">Сегодня</option>
+                <option value="tomorrow">Завтра</option>
+                <option value="this_week">На этой неделе</option>
+                <option value="this_month">В этом месяце</option>
+                <option value="this_year">В этом году</option>
+                </select>
+        </div>
+        <div class="form-group">
+            <input type="text" name="station" data-provide="typeahead" placeholder="Выберите станцию метро" data-items="4"
+                data-source='{{metro_data_source_json}}'>
+        </div>
+        <div class="form-group">
+            <input type="text" name="place" data-provide="typeahead" placeholder="{{placeholder}}" data-items="2"
+                data-source='{{place_data_source_json}}'>
+        </div>
+        <div class="form-group">
+            <input type="text" name="event" data-provide="typeahead" placeholder="{{placeholder_event}}" data-items="2"
+                data-source='{{event_list_to_json}}'>
+        </div>
+        <div class="form-group">
+            <input type="submit" class="btn btn-info" value="Искать"/>
+        </div>
+        </div>
+    </form>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>{{th_event_name}}</th>
+                    <th>Возрастная категория</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for event in events %}
+                  <tr class="active">
+                      <td><a href="/{{url_attr_2}}/{{event.event.id}}">{{ event.event.name }}</a></td>
+                      <td>{{ event.event.age_category.category }}</td>
+                  </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

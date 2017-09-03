@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %} {{title}} {% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block content %}
+<div class="container">
+    <h1>{{event_info.name}}</h1>
+    <p>{{event_info.description}}</p>
+    <h3>Расписание</h3>
+     <form class="form-inline" action="/{{url_attr}}/{{event_info.id}}" method="get" id="myform">
+        <div class="well">
+           <form class="form-horizontal">
+             <fieldset>
+              <div class="control-group">
+                <label class="control-label" for="date">Даты</label>
+                <div class="controls">
+                 <div class="input-prepend">
+                   <span class="add-on"><i class="icon-calendar"></i></span><input type="text" name="date" id="date" value="07/18/2017 - 07/21/2018" />
+                 </div>
+                </div>
+              </div>
+             </fieldset>
+           </form>
+
+            <script type="text/javascript">
+          $(document).ready(function() {
+            $('#date').daterangepicker();
+          });
+          </script>
+
+
+        <div class="form-group">
+            <select name="time">
+                <option value="">Весь день</option>
+                <option value="morning">Утро</option>
+                <option value="afternoon">День</option>
+                <option value="evening">Вечер</option>
+                <option value="night">Ночь</option>
+                </select>
+        </div>
+        <div class="form-group">
+            <input type="text" name="station" data-provide="typeahead" placeholder="Станция метро" data-items="4"
+                data-source='{{metro_data_source_json}}'>
+        </div>
+        <div class="form-group">
+            <input type="text" name="place" data-provide="typeahead" placeholder="{{place_holder}}" data-items="2"
+                data-source='{{place_data_source_json}}'>
+        </div>
+        <div class="form-group">
+            <input type="submit" class="btn btn-info" value="Искать"/>
+        </div>
+        </div>
+    </form>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Цены</th>
+                    <th>Дата и время</th>
+                    <th>Где</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for show_event in event_schedule %}
+                  <tr class="active">
+                      <td>{{ show_event.price_from if show_event.price_from else ''}} - {{ show_event.price_to if show_event.price_to else ''}}</td>
+                      <td>{{ show_event.date_start }}</td>
+                      <td>{{ show_event.place.name }}, {{ show_event.place.address }}, Ближайшее метро: {{ show_event.place.metro_station.name }}</td>
+                  </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
